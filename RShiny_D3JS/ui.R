@@ -22,7 +22,9 @@ fluidPage(theme="d3style.css",
       
       # it will load the d3.js of version 5 in html from cdn
       tags$head(tags$script(src="https://d3js.org/d3.v5.min.js")),
-      
+      tags$head(tags$script(src="https://d3js.org/d3-scale-chromatic.v1.min.js")),
+
+
       # this is the script where we create our d3 chart, which resides in www folder
       tags$script(src="d3js.js"),
       

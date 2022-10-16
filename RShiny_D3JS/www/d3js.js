@@ -1,9 +1,12 @@
 // get the data from shiny with Shiny.addCustomMessageHandler
 // 'phonedata' is what we have specified in server and it must match here
 
-Shiny.addCustomMessageHandler("phonedata",d3jschart);
+Shiny.addCustomMessageHandler("r-data2-d3",d3jschart);
 function d3jschart(d3data){
-	
+  
+  
+ 
+
 	// to store the data
 	var worldphonesdata = d3data;
 	
@@ -103,6 +106,94 @@ function d3jschart(d3data){
 	svg.append("g")
 		.attr("transform", "translate(" + (margin.left) + "," + margin.top + ")")
 		.call(yAxis);
+		
+	//Draw the Circle
+
 	
-						
+	svg.selectAll("circle")
+		.data(worldphonesdata)
+		.enter().append("circle")
+		.attr('class','circle')
+		.attr("transform","translate(" + margin.left + "," + margin.top + ")")
+		.attr("cx", function(d,i) {return (i * 110)})
+		.attr("cy",function(d,i) {return yscale(d.Country)})
+		.attr("r", function(d,i) {return (h - yscale(d.Country))/10})
+		.attr("fill", function (d,i){ return colorScale(d.Year); })
+		
+		.on("mousemove", function(d) {
+			tooltip
+              .style("left", d3.event.pageX-50 + "px")
+              .style("top", d3.event.pageY - 25 + "px")
+              .style("display", "inline-block")
+              .html(d.Country);
+		})
+		.on("mouseout", function(d) {
+			tooltip
+			.style("display", "none");
+		});
+
+  
+ 
+			////			
+
+// adding second svg to add a new shape with seprate logic 
+///
+/*
+			var svg2 = d3.select("#D3Plot")
+		.append("svg")
+		.attr("width", w + margin.left + margin.right)
+		.attr("height", h + margin.top + margin.bottom);	
+			
+	svg2.append("rect")
+  .attr("width", 20)
+  .attr("height", 20)
+  .attr("x", 20)
+  .attr("y", 40)
+  .attr("fill",  "red")
+  .transition()
+   .delay(200)
+   .duration(10000)
+   .style("fill", "black");
+   
+*/
+
+
+
+
+
+// append the svg object to the body of the page
+var svg2 = d3.select("#D3Plot")
+.append("svg")
+  .attr("width", w + margin.left + margin.right)
+  .attr("height", h + margin.top + margin.bottom)
+.append("g")
+  .attr("transform",
+        "translate(" + margin.left + "," + margin.top + ")");
+
+//Read the data
+// Moving rectanbgles values comming from data csv
+
+svg2.append("text").text("Moving Rectangles !").attr('font-size',36)
+d3.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/heatmap_data.csv", function(data) {
+  
+
+ 	svg2.append("rect")
+ 	.attr("width", 20)
+  .attr("height", 20)
+  .attr("x", 100*data.value)
+  .attr("y", function(d,i){ return i*100 })
+  .attr("fill",  "red")
+  .transition()
+   .delay(200)
+   .duration(10000)
+   .style("fill", "black")
+   .attr("y",400)
+   .transition()
+   .delay(200)
+   .duration(10000)
+   .style("fill", "blue")
+   .attr("y",0)
+})
+
+
 };
