@@ -4,7 +4,9 @@ library(datasets)
 fluidPage(theme="d3style.css",
   
   # Give the page a title
-  titlePanel("Telephones by region"),
+  titlePanel("Testing D3 v1"),
+  
+  
    
   # Generate a row with a sidebar
   sidebarLayout(      
@@ -14,7 +16,10 @@ fluidPage(theme="d3style.css",
       selectInput("region", "Region:", 
                   choices=colnames(WorldPhones)),
       hr(),
-      helpText("Data from AT&T (1961) The World's Telephones.")
+      helpText("Source data"),
+      textInput("caption", "Caption:", "Data Summary"),
+      textInput("TEXT1", "tEXT:", "Data Summary"), 
+      actionButton("goButton", "Go"),
     ),
     
     # main panel where we will show the d3 plot
@@ -26,10 +31,16 @@ fluidPage(theme="d3style.css",
 
 
       # this is the script where we create our d3 chart, which resides in www folder
-      tags$script(src="d3js.js"),
+      tags$script(src="testd3js.js"),
       
       # place for d3 chart
-      plotOutput("D3Plot")
+      plotOutput("D3Plot"),
+      
+      # Text part shown based on shiny control side panel
+      #h3(textOutput("TEXT1", container="click on the circle to lock output text to foo value")),
+      h3(textOutput("caption", container = span)),
+      h3(textOutput("TEXT1", container = span))
+      
     )
     
   )
