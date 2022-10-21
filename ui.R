@@ -38,7 +38,9 @@ fluidPage(theme="d3style.css",
       
       # Text part shown based on shiny control side panel
       #h3(textOutput("TEXT1", container="click on the circle to lock output text to foo value")),
-      div("Somee text", class="someClass"),
+      div("Some Examples -  ", class="someClass"),
+      div("Some Other examples -  ", class="otherClass"),
+      
       h3(textOutput("caption", container = span)),
       h3(textOutput("TEXT1", container = span))
       #div("Somee text", class="someClass", 

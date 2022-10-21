@@ -2,29 +2,30 @@
 // 'phonedata' is what we have specified in server and it must match here
 
 
+
 Shiny.addCustomMessageHandler("r-data2-d3",d3jschart);
 
-
-
 function d3jschart(d3data){
-  
-  	// to remove previous chart
-	d3.selectAll("svg").remove();
-	
-	// decide the margin
-	var margin = {top: 50, right: 50, bottom: 50, left: 50},
+
+		
+		
+		var margin = {top: 50, right: 50, bottom: 50, left: 50},
 	width = 851 - margin.left - margin.right,
 	height = 550 - margin.top - margin.bottom;
 	
      const { range, timer , selection} = d3;
       const { sin } = Math;
       const n = 30;
+
+  
+  	// to remove previous chart
+	d3.selectAll("svg").remove();
+	
+	// decide the margin
+	
       
 	var svg = d3.select("#D3Plot")
 		.append("svg")
-		
-		
-		
 		
 		
 		const w = svg.attr("width", width + margin.left + margin.right)
@@ -91,10 +92,7 @@ function d3jschart(d3data){
           	
           	
      
-     	var svg2 = d3.select(".someClass")
-            .append("svg")
-            .attr("width", width)
-            .attr("height", height)
+     
             
   
 		
@@ -107,9 +105,55 @@ function d3jschart(d3data){
           
 };
 
+	
 
+// Receiving data from R and printing it to console
+
+            
 Shiny.addCustomMessageHandler("sentMsg",newFun);
-function newFun(data){
-  console.log(data);
-};
+function newFun(thisData){
+  
+  	d3.selectAll("g").remove();
 
+  
+var margin = {top: 200, right: 50, bottom: 50, left: 50},
+	width = 851 - margin.left - margin.right,
+	height = 550 - margin.top - margin.bottom;
+	
+     const { range, timer , selection} = d3;
+      const { sin } = Math;
+      const n = 30;
+
+	// decide the margin
+	
+	//..var svg2 = d3.select(".someClass")
+	//	.append("svg")
+       var g1 = d3.select(".someClass")
+            .append("g")
+            .attr("width", width)
+            .attr("height", height)
+
+ 
+
+   g1.selectAll("button")
+  .data(thisData)
+  .join('button')
+  .attr("id", function(thisData) {return thisData.id})
+  .text((thisData) => { return "print" + " " + thisData.y })
+  .on('click', (thisData) => { console.log(thisData.y)});
+  
+  
+  var g2 = d3.select(".otherClass")
+            .append("g")
+            .attr("width", width)
+            .attr("height", height)
+
+g2.selectAll("button")
+  .data(thisData)
+  .join('button')
+  .attr("id", function(thisData) {return thisData.id})
+  .text((thisData) => { return "print" + " " + thisData.y })
+  .on('click', (thisData) => { console.log(thisData.y)});
+  
+
+};
