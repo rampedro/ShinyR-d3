@@ -7,6 +7,11 @@ fluidPage(theme="d3style.css",
   titlePanel("Testing D3 v1"),
   
   
+  
+  sliderInput(inputId = "slider", label = "Select a number:", min = 0.01, max = 3, value = 0.3, step = 0.01),
+  textOutput(outputId = "result"),
+  
+  
    
   # Generate a row with a sidebar
   sidebarLayout(      

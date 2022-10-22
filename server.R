@@ -9,12 +9,27 @@ function(input, output,session) {
    
   observe({
     
-    # to send the data to javascript we will use session$sendCustomMessage
-    # the type = 'phonedata' ,we can give any name here but it must be match with d3js.js file                                      #,"nums"=input$foo         
-    session$sendCustomMessage(type='r-data2-d3', jsonlite::toJSON(data.frame(cbind("Year"=WorldPhones[,"Year"],"Country"=WorldPhones[,input$region]))))
-    session$sendCustomMessage(type='sentMsg', jsonlite::toJSON(data.frame(cbind('id'=c('one','two','three','four'),'y'=input$region))))
+    # this is act as a listener. Once the R (shiny drop down is changed) the corresponding d3 elements,
+    # buttons that are bind to R input$region value will also be change. 
+    
+    # to send the data 2 javascript we will use session$sendCustomMessage
+    # the type = 'dataNAME' ,we can give any name here but it must be match with d3js.js file                                      #,"nums"=input$foo         
+    session$sendCustomMessage(type='sentMsg', jsonlite::toJSON(data.frame(cbind('id'=c('one','two','three','four'),'y'=input$region,'val'=input$slider))))
+    
+     session$sendCustomMessage(type='r-data2-d3', jsonlite::toJSON(data.frame(cbind('other'=input$slider,"Year"=WorldPhones[,"Year"],"Country"=WorldPhones[,input$region]))))
+
+    
+    #input$slider
+    #session$sendCustomMessage(type='sliderValue', jsonlite::toJSON(data.frame(cbind('val'=input$slider))))
+    
+    output$result <- renderText({
+      input$slider
+      
+    })
     
   })
+  
+  
   
   cap <- eventReactive(input$goButton, {
     input$caption
