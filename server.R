@@ -1,4 +1,5 @@
 library(datasets)
+?datasets
 WorldPhones = data.frame(WorldPhones)
 WorldPhones$Year = rownames(WorldPhones)
 
@@ -36,11 +37,13 @@ function(input, output,session) {
   })
   
   text <- eventReactive(input$goButton, {
-    input$TEXT1
-    #input$foo
+    #input$TEXT1
+    # If circles in d3 clicked then the go button from Rshiny updates the dom with new text
+    # This can be helpful in running any R code and outputing the result to screen in Text format
+      input$foo 
+   
+    
   })
-  
-  
   
   
   output$caption <- renderText({
@@ -50,5 +53,10 @@ function(input, output,session) {
   output$TEXT1 <- renderText({
     text()
   })
+  
+
+  
+  
+  
   
 }

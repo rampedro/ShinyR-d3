@@ -7,13 +7,16 @@
 		 //var frequency = datum[0].val;
 		 //console.log(frequency)
 //};
-
+var dummyNum = 10;
             
 Shiny.addCustomMessageHandler("sentMsg",newFun);
 function newFun(thisData){
   
   	d3.selectAll("g").remove();
-  		console.log(parseFloat(thisData[0].val))
+  		//console.log(parseFloat(thisData[0].val))
+  		
+  		const x = d3.scaleLinear().domain([d3.min(d3.range(10)),d3.max(d3.range(10))])
+  		console.log(x.domain())
   		let frequncy = parseFloat(thisData[0].val)
 
   
@@ -41,7 +44,17 @@ var margin = {top: 200, right: 50, bottom: 50, left: 50},
   .join('button')
   .attr("id", function(thisData) {return thisData.id})
   .text((thisData) => { return "print" + " " + thisData.y })
-  .on('click', (thisData) => { console.log(thisData.y)});
+  .on('click', (thisData) => { 
+    
+    console.log(thisData.y)
+    
+    if (thisData.y == "Asia"){
+    dummyNum = -10
+    }else if (thisData.y == "Africa"){
+      dummyNum = 10
+      
+    }
+  });
   
   
   var g2 = d3.select(".otherClass")
@@ -54,7 +67,11 @@ g2.selectAll("button")
   .join('button')
   .attr("id", function(thisData) {return thisData.id})
   .text((thisData) => { return "print" + " " + thisData.y })
-  .on('click', (thisData) => { console.log(thisData.y)});
+  .on('click', (thisData) => { console.log(thisData.y)
+  
+    
+    
+  });
   
 
 };
@@ -82,7 +99,8 @@ function d3jschart(d3data){
      const { range, timer , selection} = d3;
       const { sin } = Math;
       const n = 30;
-
+      
+      
   
   	// to remove previous chart
 	d3.selectAll("svg").remove();
@@ -103,17 +121,18 @@ function d3jschart(d3data){
 
       const radius = width / n / 2;
 
-      const x = (d) => ((d + 0.5) * width) / n;
+      const x = (d) => ((d + 0.5 + dummyNum ) * width) / n;
       const y = (t) => (d) =>
         (sin(d *frequency + t / 1000) * height * 1.5) / 4 + height / 2;
 
       svg
         .selectAll('circle')
         .data(range(n))
-        .enter()
-        .append('circle')
+        .join('circle')
+     //   .enter()
+      // .append('circle')
         .attr('cx', x)
-        .attr('r', radius)
+        .attr('r', (d, i) => i*radius/10)
         
         .call((selection) => {
           
@@ -123,9 +142,18 @@ function d3jschart(d3data){
             });
             
             
-        });
+        })
+        .on("click", function(){
+          Shiny.setInputValue("foo", "bar", {priority: "event"});
+          
+        })
+        .on('mouseover',function(d) { d3.select(this).style("fill", "#fff8ee")})
         
-        // Because these are being perfomed on data eneter() it fires only once
+        ;
+        
+        
+        
+        // Because these are being perfomed on data enter() it fires only once
         //.on("click", function send2R() {
         // console.log("Clicked")
         //  Shiny.setInputValue("foo", "bar", {priority: "event"});

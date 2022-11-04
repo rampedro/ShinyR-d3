@@ -1,16 +1,6 @@
 /* while we hover mouse over bar chart its color will be orange */
 
-.circle:hover {
-	fill: orange;
-}
 
-.rect:hover {
-	fill: orange;
-}
-
-button {
-  fill: orange;
-}
 
 
 

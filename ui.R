@@ -1,10 +1,18 @@
 library(datasets)
 
+
+
+
+
+
 # Use a fluid Bootstrap layout
+
 fluidPage(theme="d3style.css",
   
   # Give the page a title
   titlePanel("Testing D3 v1"),
+  
+
   
   
   
@@ -22,8 +30,14 @@ fluidPage(theme="d3style.css",
                   choices=colnames(WorldPhones)),
       hr(),
       helpText("Source data"),
+      
+      
       textInput("caption", "Caption:", "Data Summary"),
+      
+      
       textInput("TEXT1", "tEXT:", "Data Summary"), 
+      
+      
       actionButton("goButton", "Go"),
     ),
     
